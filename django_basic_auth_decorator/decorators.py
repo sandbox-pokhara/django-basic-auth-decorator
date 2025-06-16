@@ -24,6 +24,8 @@ def basic_auth(credentials: list[tuple[str, str]]):
                             .decode("utf-8")
                             .split(":", 1)
                         )
+                        if username == "" and password == "":
+                            return HttpResponse(status=401)
                         if (username, password) in credentials:
                             return view_func(request)
                     except (ValueError, UnicodeDecodeError):
