@@ -32,6 +32,12 @@ def my_view(request):
 def other_view(request):
     ...
 
+# Browsers forget basic auth credentials when they restart, set cookie_age
+# (seconds) to remember a successful login in a signed cookie
+@basic_auth(CREDENTIALS, cookie_age=30 * 24 * 60 * 60)
+def remembered_view(request):
+    ...
+
 ```
 
 ## License
