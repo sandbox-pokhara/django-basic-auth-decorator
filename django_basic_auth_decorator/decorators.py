@@ -11,7 +11,9 @@ P = ParamSpec("P")
 R = TypeVar("R", covariant=True)
 
 
-def basic_auth(credentials: list[tuple[str, str]]):
+def basic_auth(
+    credentials: list[tuple[str, str]], realm: str = "API Docs"
+):
     def decorator(view_func: Callable[[HttpRequest], R]):
         @wraps(view_func)
         def wrapper(request: HttpRequest) -> R | HttpResponse:
@@ -30,7 +32,7 @@ def basic_auth(credentials: list[tuple[str, str]]):
                         pass
 
             response = HttpResponse(status=401)
-            response["WWW-Authenticate"] = 'Basic realm="API Docs"'
+            response["WWW-Authenticate"] = f'Basic realm="{realm}"'
             return response
 
         return wrapper

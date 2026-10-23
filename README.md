@@ -26,6 +26,12 @@ CREDENTIALS = [
 def my_view(request):
     ...
 
+# Use a different realm for each set of credentials, otherwise browsers
+# reuse the cached credentials of one view on the other and prompt again
+@basic_auth(OTHER_CREDENTIALS, realm="Internal Docs")
+def other_view(request):
+    ...
+
 ```
 
 ## License
